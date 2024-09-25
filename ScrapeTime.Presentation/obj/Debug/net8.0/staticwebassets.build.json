@@ -1,0 +1,39 @@
+{
+  "Version": 1,
+  "Hash": "FC72XZL6Xtnrl3ozkYxWV2Cou5mn8XOaMt6OIIn6+oM=",
+  "Source": "ScrapeTime.Presentation",
+  "BasePath": "_content/ScrapeTime.Presentation",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [
+    {
+      "Name": "ScrapeTime.Presentation/wwwroot",
+      "Source": "ScrapeTime.Presentation",
+      "ContentRoot": "/Users/sushantshrestha/RiderProjects/ScrapeTime/ScrapeTime.Presentation/wwwroot/",
+      "BasePath": "_content/ScrapeTime.Presentation",
+      "Pattern": "**"
+    }
+  ],
+  "Assets": [
+    {
+      "Identity": "/Users/sushantshrestha/RiderProjects/ScrapeTime/ScrapeTime.Presentation/wwwroot/locationInfo.json",
+      "SourceId": "ScrapeTime.Presentation",
+      "SourceType": "Discovered",
+      "ContentRoot": "/Users/sushantshrestha/RiderProjects/ScrapeTime/ScrapeTime.Presentation/wwwroot/",
+      "BasePath": "_content/ScrapeTime.Presentation",
+      "RelativePath": "locationInfo.json",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot/locationInfo.json"
+    }
+  ]
+}

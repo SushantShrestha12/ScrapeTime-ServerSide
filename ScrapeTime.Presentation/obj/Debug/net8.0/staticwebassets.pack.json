@@ -1,0 +1,25 @@
+{
+  "Files": [
+    {
+      "Id": "/Users/sushantshrestha/RiderProjects/ScrapeTime/ScrapeTime.Presentation/wwwroot/locationInfo.json",
+      "PackagePath": "staticwebassets/locationInfo.json"
+    },
+    {
+      "Id": "obj/Debug/net8.0/staticwebassets/msbuild.ScrapeTime.Presentation.Microsoft.AspNetCore.StaticWebAssets.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
+    },
+    {
+      "Id": "obj/Debug/net8.0/staticwebassets/msbuild.build.ScrapeTime.Presentation.props",
+      "PackagePath": "build\\ScrapeTime.Presentation.props"
+    },
+    {
+      "Id": "obj/Debug/net8.0/staticwebassets/msbuild.buildMultiTargeting.ScrapeTime.Presentation.props",
+      "PackagePath": "buildMultiTargeting\\ScrapeTime.Presentation.props"
+    },
+    {
+      "Id": "obj/Debug/net8.0/staticwebassets/msbuild.buildTransitive.ScrapeTime.Presentation.props",
+      "PackagePath": "buildTransitive\\ScrapeTime.Presentation.props"
+    }
+  ],
+  "ElementsToRemove": []
+}
