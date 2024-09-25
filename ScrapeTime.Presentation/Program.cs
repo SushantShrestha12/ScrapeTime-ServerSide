@@ -36,8 +36,10 @@ app.UseCors(options =>
 {
     options.AllowAnyHeader()
         .AllowAnyMethod()
-        .AllowAnyOrigin();
+        .AllowAnyOrigin()
+        .WithExposedHeaders("Access-Control-Allow-Origin");
 });
+
 
 app.UseRouting();
 app.MapControllers();
