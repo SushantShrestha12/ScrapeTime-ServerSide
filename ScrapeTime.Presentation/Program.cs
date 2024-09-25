@@ -5,13 +5,15 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddCors(options =>
 {
-    options.AddDefaultPolicy(corsPolicyBuilder =>
-    {
-        corsPolicyBuilder.AllowAnyOrigin()
-               .AllowAnyMethod()
-               .AllowAnyHeader();
-    });
+    options.AddPolicy("AllowSpecificOrigin", builder =>
+        builder
+            .WithOrigins(
+                "https://scrapetime-serverside-472999507482.us-central1.run.app") 
+            .AllowAnyMethod()
+            .AllowAnyHeader()
+            .SetIsOriginAllowedToAllowWildcardSubdomains());
 });
+
 
 builder.Services.AddControllers();
 builder.Services.AddScoped<IInstagramService, InstagramService>();
