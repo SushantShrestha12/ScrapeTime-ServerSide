@@ -3,7 +3,6 @@ using ScrapeTime.Presentation.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
 builder.Services.AddControllers();
 builder.Services.AddScoped<IInstagramService, InstagramService>();
 builder.Services.AddScoped<IYoutubeService, YoutubeService>();
