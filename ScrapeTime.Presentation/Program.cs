@@ -3,7 +3,15 @@ using ScrapeTime.Presentation.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddCors();
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(corsPolicyBuilder =>
+    {
+        corsPolicyBuilder.AllowAnyOrigin()
+               .AllowAnyMethod()
+               .AllowAnyHeader();
+    });
+});
 
 builder.Services.AddControllers();
 builder.Services.AddScoped<IInstagramService, InstagramService>();
@@ -33,12 +41,7 @@ app.UseHttpsRedirection();
 
 app.UseRouting();
 
-app.UseCors(options =>
-{
-    options.AllowAnyOrigin()
-        .AllowAnyMethod()
-        .AllowAnyHeader();
-});
+app.UseCors();
 
 app.UseAuthorization();
 
