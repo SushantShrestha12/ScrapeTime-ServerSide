@@ -3,6 +3,8 @@ using ScrapeTime.Presentation.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddCors();
+
 builder.Services.AddControllers();
 builder.Services.AddScoped<IInstagramService, InstagramService>();
 builder.Services.AddScoped<IYoutubeService, YoutubeService>();
@@ -29,18 +31,17 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.UseAuthorization();
+app.UseRouting();
 
 app.UseCors(options =>
 {
-    options.AllowAnyHeader()
+    options.AllowAnyOrigin()
         .AllowAnyMethod()
-        .AllowAnyOrigin()
-        .WithExposedHeaders("Access-Control-Allow-Origin");
+        .AllowAnyHeader();
 });
 
+app.UseAuthorization();
 
-app.UseRouting();
 app.MapControllers();
 
 app.Run();
