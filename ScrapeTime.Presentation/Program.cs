@@ -5,13 +5,13 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowSpecificOrigin", builder =>
-        builder
-            .WithOrigins(
-                "https://scrapetime.bluewich.com") 
+    options.AddPolicy("AllowSpecificOrigin", policy =>
+    {
+        policy.SetIsOriginAllowedToAllowWildcardSubdomains()
+            .WithOrigins("https://bluewich.com", "https://*.bluewich.com") // Replace with your main domain and wildcard subdomain
             .AllowAnyMethod()
-            .AllowAnyHeader()
-            .SetIsOriginAllowedToAllowWildcardSubdomains());
+            .AllowAnyHeader();
+    });
 });
 
 builder.Services.AddControllers();
@@ -42,7 +42,7 @@ app.UseHttpsRedirection();
 
 app.UseRouting();
 
-app.UseCors();
+app.UseCors("AllowSpecificOrigin");
 
 app.UseAuthorization();
 
