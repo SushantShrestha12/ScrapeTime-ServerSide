@@ -8,12 +8,11 @@ builder.Services.AddCors(options =>
     options.AddPolicy("AllowSpecificOrigin", builder =>
         builder
             .WithOrigins(
-                "https://scrapetime-serverside-472999507482.us-central1.run.app") 
+                "https://scrapetime.bluewich.com") 
             .AllowAnyMethod()
             .AllowAnyHeader()
             .SetIsOriginAllowedToAllowWildcardSubdomains());
 });
-
 
 builder.Services.AddControllers();
 builder.Services.AddScoped<IInstagramService, InstagramService>();
