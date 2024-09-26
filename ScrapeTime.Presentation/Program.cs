@@ -8,7 +8,7 @@ builder.Services.AddCors(options =>
     options.AddPolicy("AllowSpecificOrigin", policy =>
     {
         policy.SetIsOriginAllowedToAllowWildcardSubdomains()
-            .WithOrigins("https://bluewich.com", "https://*.bluewich.com") // Replace with your main domain and wildcard subdomain
+            .WithOrigins("https://bluewich.com", "https://*.bluewich.com", "https://scrapetime-serverside-472999507482.us-central1.run.app") 
             .AllowAnyMethod()
             .AllowAnyHeader();
     });
@@ -40,9 +40,9 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.UseRouting();
-
 app.UseCors("AllowSpecificOrigin");
+
+app.UseRouting();
 
 app.UseAuthorization();
 
