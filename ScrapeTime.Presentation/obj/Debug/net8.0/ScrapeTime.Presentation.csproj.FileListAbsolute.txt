@@ -58,3 +58,4 @@
 /Users/sushantshrestha/RiderProjects/ScrapeTime/ScrapeTime.Presentation/bin/Debug/net8.0/ScrapeTime.Presentation.staticwebassets.runtime.json
 /Users/sushantshrestha/RiderProjects/ScrapeTime/ScrapeTime.Presentation/bin/Debug/net8.0/SeleniumExtras.WaitHelpers.dll
 /Users/sushantshrestha/RiderProjects/ScrapeTime/ScrapeTime.Presentation/bin/Debug/net8.0/WebDriver.Support.dll
+/Users/sushantshrestha/RiderProjects/ScrapeTime/ScrapeTime.Presentation/obj/Debug/net8.0/ScrapeTime.Presentation.sourcelink.json

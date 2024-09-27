@@ -1,4 +1,4 @@
-﻿FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
+FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
 USER $APP_UID
 WORKDIR /app
 EXPOSE 8080
@@ -8,7 +8,6 @@ FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 COPY ["ScrapeTime.Presentation/ScrapeTime.Presentation.csproj", "ScrapeTime.Presentation/"]
-COPY ["ScrapeTime.Domain/ScrapeTime.Domain.csproj", "ScrapeTime.Domain/"]
 RUN dotnet restore "ScrapeTime.Presentation/ScrapeTime.Presentation.csproj"
 COPY . .
 WORKDIR "/src/ScrapeTime.Presentation"
@@ -22,3 +21,4 @@ FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
 ENTRYPOINT ["dotnet", "ScrapeTime.Presentation.dll"]
+

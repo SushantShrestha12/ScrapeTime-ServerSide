@@ -7,8 +7,7 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowSpecificOrigin", policy =>
     {
-        policy.SetIsOriginAllowedToAllowWildcardSubdomains()
-            .WithOrigins("https://bluewich.com", "https://*.bluewich.com", "https://scrapetime-serverside-472999507482.us-central1.run.app") 
+        policy.SetIsOriginAllowed(origin => new Uri(origin).Host == "scrapetime.bluewich.com" || new Uri(origin).Host.EndsWith(".bluewich.com"))
             .AllowAnyMethod()
             .AllowAnyHeader();
     });
