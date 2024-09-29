@@ -1,4 +1,5 @@
 using Google.Apis.YouTube.v3;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using ScrapeTime.Presentation.Services;
 
@@ -16,6 +17,7 @@ namespace ScrapeTime.Presentation.Controllers
         }
 
         [HttpGet("trending")]
+        [EnableCors("AllowSpecificOrigin")]
         public async Task<IActionResult> GetTrendingYoutubeVideo(string countryCode)
         {
             try

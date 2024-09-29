@@ -19,6 +19,17 @@ builder.Services.AddSwaggerGen(c =>
     });
 });
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowSpecificOrigin", builder =>
+    {
+        builder.WithOrigins("https://scrapetime.bluewich.com")
+            .AllowAnyMethod()
+            .AllowAnyHeader();
+    });
+});
+
+
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
@@ -31,11 +42,16 @@ app.UseHttpsRedirection();
 
 app.UseAuthorization();
 
-app.UseCors(options =>
+app.UseCors("AllowSpecificOrigin");
+
+app.Use(async (context, next) =>
 {
-    options.AllowAnyHeader()
-        .AllowAnyMethod()
-        .AllowAnyOrigin();
+    context.Response.Headers.Append("Access-Control-Allow-Origin", "https://scrapetime.bluewich.com");
+    context.Response.Headers.Append("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+    context.Response.Headers.Append("Access-Control-Allow-Headers", "Content-Type");
+    context.Response.StatusCode = 204;
+
+    await next.Invoke();
 });
 
 app.UseRouting();
