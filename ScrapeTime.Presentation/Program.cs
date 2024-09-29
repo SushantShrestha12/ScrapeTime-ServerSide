@@ -7,9 +7,10 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowSpecificOrigin", policy =>
     {
-        policy.SetIsOriginAllowed(origin => new Uri(origin).Host == "scrapetime.bluewich.com" || new Uri(origin).Host.EndsWith(".bluewich.com"))
+        policy.WithOrigins("https://scrapetime.bluewich.com")
             .AllowAnyMethod()
-            .AllowAnyHeader();
+            .AllowAnyHeader()
+            .AllowCredentials(); 
     });
 });
 
@@ -39,7 +40,18 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.UseCors("AllowSpecificOrigin");
+app.Use(async (context, next) =>
+{
+    if (context.Request.Method == "OPTIONS")
+    {
+        context.Response.Headers.Append("Access-Control-Allow-Origin", "https://scrapetime.bluewich.com");
+        context.Response.Headers.Append("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+        context.Response.Headers.Append("Access-Control-Allow-Headers", "Content-Type");
+        context.Response.StatusCode = 204; 
+        return;
+    }
+    await next();
+});
 
 app.UseRouting();
 
