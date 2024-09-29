@@ -1,9 +1,14 @@
+using Microsoft.AspNetCore.Cors;
+using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.OpenApi.Models;
 using ScrapeTime.Presentation.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddControllers();
+builder.Services.AddControllers(options =>
+{
+    options.Filters.Add(new AllowAnonymousFilter());
+});
 builder.Services.AddScoped<IInstagramService, InstagramService>();
 builder.Services.AddScoped<IYoutubeService, YoutubeService>();
 builder.Services.AddScoped<ITikTokService, TikTokService>();
