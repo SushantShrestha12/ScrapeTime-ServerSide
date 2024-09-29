@@ -1,3 +1,5 @@
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using ScrapeTime.Presentation.Services;
 
@@ -5,6 +7,8 @@ namespace ScrapeTime.Presentation.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [AllowAnonymous]
+    [EnableCors("AllowAll")] 
     public class TikTokController : ControllerBase
     {
         private readonly ITikTokService _tikTokService;

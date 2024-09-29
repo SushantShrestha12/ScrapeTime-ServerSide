@@ -1,4 +1,4 @@
-using Google.Apis.YouTube.v3;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using ScrapeTime.Presentation.Services;
@@ -7,6 +7,8 @@ namespace ScrapeTime.Presentation.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
+    [AllowAnonymous]
+    [EnableCors("AllowAll")] 
     public class YouTubeController : ControllerBase
     {
         private readonly IYoutubeService _youtubeService;

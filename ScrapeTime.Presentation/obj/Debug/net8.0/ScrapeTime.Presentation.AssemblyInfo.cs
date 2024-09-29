@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("ScrapeTime.Presentation")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+66d5c8c74b67b863c3010b0bc523503663c78cbe")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+812c0a343661413ae5512c866c3ceaf41d7fe5a8")]
 [assembly: System.Reflection.AssemblyProductAttribute("ScrapeTime.Presentation")]
 [assembly: System.Reflection.AssemblyTitleAttribute("ScrapeTime.Presentation")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
