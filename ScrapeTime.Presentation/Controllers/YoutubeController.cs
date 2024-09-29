@@ -17,7 +17,6 @@ namespace ScrapeTime.Presentation.Controllers
         }
 
         [HttpGet("trending")]
-        [EnableCors("AllowSpecificOrigin")]
         public async Task<IActionResult> GetTrendingYoutubeVideo(string countryCode)
         {
             try

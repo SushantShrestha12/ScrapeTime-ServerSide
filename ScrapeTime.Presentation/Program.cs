@@ -21,14 +21,13 @@ builder.Services.AddSwaggerGen(c =>
 
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowSpecificOrigin", builder =>
+    options.AddPolicy("AllowAll", builder =>
     {
-        builder.WithOrigins("https://scrapetime.bluewich.com")
+        builder.AllowAnyOrigin()
             .AllowAnyMethod()
             .AllowAnyHeader();
     });
 });
-
 
 var app = builder.Build();
 
@@ -40,21 +39,11 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.UseAuthorization();
-
-app.UseCors("AllowSpecificOrigin");
-
-app.Use(async (context, next) =>
-{
-    context.Response.Headers.Append("Access-Control-Allow-Origin", "https://scrapetime.bluewich.com");
-    context.Response.Headers.Append("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
-    context.Response.Headers.Append("Access-Control-Allow-Headers", "Content-Type");
-    context.Response.StatusCode = 204;
-
-    await next.Invoke();
-});
-
 app.UseRouting();
+
+app.UseCors("AllowAll");
+
+app.UseAuthorization();
 
 app.MapControllers();
 
