@@ -1,7 +1,6 @@
 using Newtonsoft.Json;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
-using OpenQA.Selenium.Support.UI;
 using ScrapeTime.Presentation.Contracts;
 
 namespace ScrapeTime.Presentation.Services
