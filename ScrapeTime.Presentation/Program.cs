@@ -30,16 +30,6 @@ builder.Services.AddCors(options =>
     {
         builder.AllowAnyOrigin()
             .AllowAnyMethod()
-            .AllowAnyHeader();
-    });
-});
-
-builder.Services.AddCors(options =>
-{
-    options.AddPolicy("AllowAll", builder =>
-    {
-        builder.AllowAnyOrigin()
-            .AllowAnyMethod()
             .AllowAnyHeader()
             .WithExposedHeaders("Access-Control-Allow-Origin", "Access-Control-Allow-Headers")
             .WithMethods("GET", "POST", "OPTIONS"); 
