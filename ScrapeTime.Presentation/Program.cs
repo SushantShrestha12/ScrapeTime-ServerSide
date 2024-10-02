@@ -1,4 +1,3 @@
-using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.OpenApi.Models;
 using ScrapeTime.Presentation.Services;
