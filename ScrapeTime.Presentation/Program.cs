@@ -34,7 +34,7 @@ builder.Services.AddCors(options =>
             .AllowAnyMethod()
             .AllowAnyHeader()
             .WithExposedHeaders("Access-Control-Allow-Origin", "Access-Control-Allow-Headers")
-            .WithMethods("GET", "POST", "OPTIONS", "PUT", "DELETE");  // Include all necessary methods
+            .WithMethods("GET", "POST", "OPTIONS", "PUT", "DELETE"); 
     });
 });
 

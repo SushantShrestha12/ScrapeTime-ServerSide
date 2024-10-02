@@ -26,17 +26,18 @@ namespace ScrapeTime.Presentation.Services
             };
 
             options.Proxy = proxy;
-
+            
             options.AddArgument("headless"); 
             options.AddArgument("--disable-gpu");
             options.AddArgument("--no-sandbox");
             options.AddArgument("--disable-dev-shm-usage");
             options.AddArgument("--disable-extensions");
             options.AddArgument("--disable-software-rasterizer");
-            options.AddArgument("--disable-web-security");
+            options.AddArgument("--disable-web-security"); 
             options.AddArgument("--allow-running-insecure-content");
             options.AddArgument("user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36");
-
+            options.AddArgument("--user-data-dir=/tmp/chrome_dev"); 
+            
             _driver = new ChromeDriver(options);
         }
         
