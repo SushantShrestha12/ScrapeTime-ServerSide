@@ -20,13 +20,11 @@ namespace ScrapeTime.Presentation.Services
         {
             var options = new ChromeOptions();
             
-            const string proxyAddress = "211.104.20.205:8080"; 
             var proxy = new Proxy
             {
-                HttpProxy = proxyAddress,
-                SslProxy = proxyAddress,
-                FtpProxy = proxyAddress
+                HttpProxy = "198.49.68.80:80"
             };
+
             options.Proxy = proxy;
 
             options.AddArgument("headless"); 
@@ -115,22 +113,20 @@ namespace ScrapeTime.Presentation.Services
              {
                  await _driver.Navigate().GoToUrlAsync(postLink);
                  await Task.Delay(2000);
-         
-                 if (TryClickLikesButton())
-                 {
-                     await Task.Delay(1500);
-                     var usernameElements = _driver.FindElements(By.XPath("/html/body//div[6]//div[2]//div[2]//span/span")).Take(10);
+
+                 if (!TryClickLikesButton()) continue;
+                 await Task.Delay(1500);
+                 var usernameElements = _driver.FindElements(By.XPath("/html/body//div[6]//div[2]//div[2]//span/span")).Take(10);
                      
-                     var genderCounts = await CountGendersFromUsernames(usernameElements);
-                     var age = await PredictAgeFromAccount();
-                     instagramPosts.Add(new InstagramCreate
-                     {
-                         Url = postLink,
-                         MaleCount = genderCounts[0],
-                         FemaleCount = genderCounts[1],
-                         Age = age
-                     });
-                 }
+                 var genderCounts = await CountGendersFromUsernames(usernameElements);
+                 var age = await PredictAgeFromAccount();
+                 instagramPosts.Add(new InstagramCreate
+                 {
+                     Url = postLink,
+                     MaleCount = genderCounts[0],
+                     FemaleCount = genderCounts[1],
+                     Age = age
+                 });
              }
              return instagramPosts;
         }
@@ -286,11 +282,11 @@ namespace ScrapeTime.Presentation.Services
             _driver.Navigate().GoToUrl("https://www.instagram.com/accounts/login/");
             Thread.Sleep(3000);
 
-            // _driver.FindElement(By.Name("username")).SendKeys("ZapCode10");
-            // _driver.FindElement(By.Name("password")).SendKeys("Password110");
+            _driver.FindElement(By.Name("username")).SendKeys("ZapCode10");
+            _driver.FindElement(By.Name("password")).SendKeys("Password110");
             
-            _driver.FindElement(By.Name("username")).SendKeys("Scrape620");
-            _driver.FindElement(By.Name("password")).SendKeys("$cr@p3/19");
+            // _driver.FindElement(By.Name("username")).SendKeys("Scrape620");
+            // _driver.FindElement(By.Name("password")).SendKeys("$cr@p3/19");
             _driver.FindElement(By.XPath("//button[@type='submit']")).Click();
             Thread.Sleep(5000);
         }

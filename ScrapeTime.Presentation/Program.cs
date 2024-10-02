@@ -5,6 +5,7 @@ using ScrapeTime.Presentation.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// Add services to the container
 builder.Services.AddControllers(options =>
 {
     options.Filters.Add(new AllowAnonymousFilter());
@@ -24,30 +25,34 @@ builder.Services.AddSwaggerGen(c =>
     });
 });
 
+// Add CORS services
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowAll", builder =>
+    options.AddPolicy("AllowAll", policyBuilder =>
     {
-        builder.AllowAnyOrigin()
+        policyBuilder.AllowAnyOrigin()
             .AllowAnyMethod()
             .AllowAnyHeader()
             .WithExposedHeaders("Access-Control-Allow-Origin", "Access-Control-Allow-Headers")
-            .WithMethods("GET", "POST", "OPTIONS"); 
+            .WithMethods("GET", "POST", "OPTIONS", "PUT", "DELETE");  // Include all necessary methods
     });
 });
 
-
 var app = builder.Build();
 
+// Configure the HTTP request pipeline
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
 
-app.UseCors("AllowAll");
+app.UseHttpsRedirection(); // Optional if you're using HTTPS
 
 app.UseRouting();
+
+// Ensure CORS is used before Authorization
+app.UseCors("AllowAll");
 
 app.UseAuthorization();
 
