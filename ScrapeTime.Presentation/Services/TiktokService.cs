@@ -25,7 +25,7 @@ public class TikTokService : ITikTokService
     private static ChromeOptions GetChromeOptions()
     {
         var options = new ChromeOptions(); 
-        options.AddArgument("--headless");
+        // options.AddArgument("--headless");
         options.AddArgument("--no-sandbox");
         options.AddArgument("--disable-dev-shm-usage");
         return options;
