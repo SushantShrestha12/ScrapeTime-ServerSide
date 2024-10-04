@@ -4,15 +4,10 @@ WORKDIR /app
 EXPOSE 8080
 EXPOSE 8081
 
-# Switch to root user for installing dependencies
-USER root
-
 # Install Chrome dependencies
 RUN apt-get update && apt-get install -y \
     wget \
     unzip \
-    curl \
-    gnupg \
     ca-certificates \
     fonts-liberation \
     libappindicator3-1 \
@@ -21,37 +16,27 @@ RUN apt-get update && apt-get install -y \
     libatk1.0-0 \
     libcups2 \
     libdbus-1-3 \
-    libxcomposite1 \
-    libxrandr2 \
-    libxss1 \
-    xdg-utils \
-    libnss3 \
     libnspr4 \
-    libxshmfence1 \
-    libgbm-dev \
-    libxdamage-dev \
-    libxshmfence1 \
-    libu2f-udev \
-    libu2f-host \
-    libgconf-2-4 \
-    libpango1.0-0 \
-    libgtk-3-0 \
-    && rm -rf /var/lib/apt/lists/*
+    libnss3 \
+    libx11-xcb1 \
+    libxcomposite1 \
+    libxdamage1 \
+    libxrandr2 \
+    xdg-utils \
+    --no-install-recommends && \
+    rm -rf /var/lib/apt/lists/*
 
-# Install Chrome browser
-RUN wget -q -O - https://dl.google.com/linux/linux_signing_key.pub | apt-key add - \
-    && sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google-chrome.list' \
-    && apt-get update \
-    && apt-get install -y google-chrome-stable \
-    && rm -rf /var/lib/apt/lists/*
+# Install Chrome
+RUN wget -q -O /tmp/chromedriver.zip http://chromedriver.storage.googleapis.com/114.0.5735.90/chromedriver_linux64.zip && \
+    unzip /tmp/chromedriver.zip -d /usr/local/bin/ && \
+    rm /tmp/chromedriver.zip && \
+    wget -q -O /tmp/chrome.deb https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb && \
+    dpkg -i /tmp/chrome.deb || apt-get -f install -y && \
+    rm /tmp/chrome.deb
 
-# Install ChromeDriver
-RUN wget -O /tmp/chromedriver.zip https://chromedriver.storage.googleapis.com/117.0.5938.62/chromedriver_linux64.zip \
-    && unzip /tmp/chromedriver.zip -d /usr/local/bin/ \
-    && rm /tmp/chromedriver.zip
-
-# Switch back to non-root user
-USER $APP_UID
+# Verify installation
+RUN which google-chrome
+RUN which chromedriver
 
 # Build stage for building the application
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
