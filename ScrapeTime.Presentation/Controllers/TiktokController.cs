@@ -38,7 +38,7 @@ namespace ScrapeTime.Presentation.Controllers
         {
             try
             {
-                var backendUrl = $"https://scrapetime-881202084187.us-central1.run.app/api/tiktok/trending?countryCode={countryCode}";
+                var backendUrl = $"https://scrapetime-881202084187.us-central1.run.app/tiktok/trending?countryCode={countryCode}";
 
                 using var client = new HttpClient();
                 var response = await client.GetAsync(backendUrl);
