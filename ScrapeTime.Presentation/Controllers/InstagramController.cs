@@ -14,9 +14,10 @@ namespace ScrapeTime.Presentation.Controllers
         private readonly HttpClient _httpClient;
         private readonly IInstagramService _instagramService;
 
-        public InstagramController(HttpClient httpClient)
+        public InstagramController(HttpClient httpClient, IInstagramService instagramService)
         {
             _httpClient = httpClient;
+            _instagramService = instagramService;
         }
 
         [HttpGet("scrapeTopPosts")]
@@ -50,32 +51,29 @@ namespace ScrapeTime.Presentation.Controllers
         [HttpGet("proxyInstagramTopPostsByLocation")]
         public async Task<IActionResult> ProxyInstagramTopPostsByLocation(string location)
         {
-            var externalApiUrl = $"https://scrapetime-881202084187.us-central1.run.app/api/Instagram/scrapeTopPostsByLocation?location={location}";
             try
             {
-                var response = await _httpClient.GetAsync(externalApiUrl);
+                var url = $"https://scrapetime-881202084187.us-central1.run.app/api/Instagram/scrapeTopPostsByLocation?location={Uri.EscapeDataString(location)}";
 
-                if (!response.IsSuccessStatusCode)
+                using var client = new HttpClient();
+                var response = await client.GetAsync(url);
+
+                if (response.IsSuccessStatusCode)
                 {
-                    var errorMessage = await response.Content.ReadAsStringAsync();
-                    return StatusCode((int)response.StatusCode, new { error = $"External API returned an error: {response.StatusCode} - {errorMessage}" });
-                }
+                    var content = await response.Content.ReadAsStringAsync();
 
-                if (response.Content == null)
+                    // Optionally, you can deserialize the content if needed (e.g., if it returns JSON)
+                    // var result = JsonConvert.DeserializeObject<YourExpectedModel>(content);
+                    return Ok(content);
+                }
+                else
                 {
-                    return StatusCode(500, new { error = "The external API returned no content." });
+                    return StatusCode((int)response.StatusCode, $"Error fetching top posts: {response.ReasonPhrase}");
                 }
-
-                var content = await response.Content.ReadAsStringAsync();
-                return Content(content, "application/json");
-            }
-            catch (HttpRequestException httpEx)
-            {
-                return StatusCode(500, new { error = $"HTTP Request error: {httpEx.Message}" });
             }
             catch (Exception ex)
             {
-                return StatusCode(500, new { error = $"Error proxying request: {ex.Message}" });
+                return StatusCode(500, $"Error fetching top posts: {ex.Message}");
             }
         }
     }

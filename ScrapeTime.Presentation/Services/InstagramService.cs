@@ -24,10 +24,10 @@ namespace ScrapeTime.Presentation.Services
             {
                 HttpProxy = "198.49.68.80:80"
             };
-
+            
             options.Proxy = proxy;
             
-            options.AddArgument("headless"); 
+           //options.AddArgument("headless"); 
             options.AddArgument("--disable-gpu");
             options.AddArgument("--no-sandbox");
             options.AddArgument("--disable-dev-shm-usage");
@@ -283,11 +283,11 @@ namespace ScrapeTime.Presentation.Services
             _driver.Navigate().GoToUrl("https://www.instagram.com/accounts/login/");
             Thread.Sleep(3000);
 
-            _driver.FindElement(By.Name("username")).SendKeys("ZapCode10");
-            _driver.FindElement(By.Name("password")).SendKeys("Password110");
+            // _driver.FindElement(By.Name("username")).SendKeys("ZapCode10");
+            // _driver.FindElement(By.Name("password")).SendKeys("Password110");
             
-            // _driver.FindElement(By.Name("username")).SendKeys("Scrape620");
-            // _driver.FindElement(By.Name("password")).SendKeys("$cr@p3/19");
+            _driver.FindElement(By.Name("username")).SendKeys("Scrape620");
+            _driver.FindElement(By.Name("password")).SendKeys("$cr@p3/19");
             _driver.FindElement(By.XPath("//button[@type='submit']")).Click();
             Thread.Sleep(5000);
         }
