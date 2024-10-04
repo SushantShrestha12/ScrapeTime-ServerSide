@@ -1,8 +1,6 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
-using System.Net.Http;
-using System.Threading.Tasks;
 using ScrapeTime.Presentation.Services;
 
 namespace ScrapeTime.Presentation.Controllers
@@ -49,7 +47,6 @@ namespace ScrapeTime.Presentation.Controllers
             }
         }
 
-        // Proxy method to bypass CORS
         [HttpGet("proxyInstagramTopPostsByLocation")]
         public async Task<IActionResult> ProxyInstagramTopPostsByLocation(string location)
         {
@@ -57,12 +54,28 @@ namespace ScrapeTime.Presentation.Controllers
             try
             {
                 var response = await _httpClient.GetAsync(externalApiUrl);
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    var errorMessage = await response.Content.ReadAsStringAsync();
+                    return StatusCode((int)response.StatusCode, new { error = $"External API returned an error: {response.StatusCode} - {errorMessage}" });
+                }
+
+                if (response.Content == null)
+                {
+                    return StatusCode(500, new { error = "The external API returned no content." });
+                }
+
                 var content = await response.Content.ReadAsStringAsync();
                 return Content(content, "application/json");
             }
+            catch (HttpRequestException httpEx)
+            {
+                return StatusCode(500, new { error = $"HTTP Request error: {httpEx.Message}" });
+            }
             catch (Exception ex)
             {
-                return StatusCode(500, $"Error proxying request: {ex.Message}");
+                return StatusCode(500, new { error = $"Error proxying request: {ex.Message}" });
             }
         }
     }
