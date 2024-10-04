@@ -6,7 +6,7 @@ using ScrapeTime.Presentation.Services;
 namespace ScrapeTime.Presentation.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     [AllowAnonymous]
     [EnableCors("AllowAll")]
     public class InstagramController : ControllerBase

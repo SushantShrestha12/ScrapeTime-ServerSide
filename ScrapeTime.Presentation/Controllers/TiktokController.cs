@@ -5,7 +5,7 @@ using ScrapeTime.Presentation.Services;
 
 namespace ScrapeTime.Presentation.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     [ApiController]
     [AllowAnonymous]
     [EnableCors("AllowAll")] 
@@ -18,7 +18,7 @@ namespace ScrapeTime.Presentation.Controllers
             _tikTokService = tikTokService;
         }
 
-        [HttpGet("trending/{countryCode}")]
+        [HttpGet("trending")]
         public async Task<IActionResult> GetMostLikedVideo(string countryCode)
         {
             try
@@ -32,6 +32,37 @@ namespace ScrapeTime.Presentation.Controllers
                 return StatusCode(500, $"An error occurred: {ex.Message}");
             }
         }
+        
+        [HttpGet("proxyMostLikedVideo")]
+        public async Task<IActionResult> ProxyGetMostLikedVideo(string countryCode)
+        {
+            try
+            {
+                var backendUrl = $"https://scrapetime-881202084187.us-central1.run.app/api/tiktok/trending?countryCode={countryCode}";
+
+                using var client = new HttpClient();
+                var response = await client.GetAsync(backendUrl);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    var content = await response.Content.ReadAsStringAsync();
+
+                    // Optionally, you can deserialize the content if needed (e.g., if it returns JSON)
+                    // var videoData = JsonConvert.DeserializeObject<YourExpectedModel>(content);
+
+                    return Ok(content);
+                }
+                else
+                {
+                    return StatusCode((int)response.StatusCode, $"Error fetching most liked video: {response.ReasonPhrase}");
+                }
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Error fetching most liked video: {ex.Message}");
+            }
+        }
+
 
         [HttpGet("tiktok-tag")]
         public async Task<IActionResult> GetTopTrendingTag()
