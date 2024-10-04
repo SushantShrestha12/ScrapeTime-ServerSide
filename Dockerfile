@@ -1,9 +1,11 @@
 # Base image for the ASP.NET Core application
 FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
-USER $APP_UID
 WORKDIR /app
 EXPOSE 8080
 EXPOSE 8081
+
+# Switch to root user for installing dependencies
+USER root
 
 # Install Chrome dependencies
 RUN apt-get update && apt-get install -y \
@@ -31,7 +33,6 @@ RUN apt-get update && apt-get install -y \
     libxshmfence1 \
     libu2f-udev \
     libu2f-host \
-    libu2f-udev \
     libgconf-2-4 \
     libpango1.0-0 \
     libgtk-3-0 \
@@ -48,6 +49,9 @@ RUN wget -q -O - https://dl.google.com/linux/linux_signing_key.pub | apt-key add
 RUN wget -O /tmp/chromedriver.zip https://chromedriver.storage.googleapis.com/117.0.5938.62/chromedriver_linux64.zip \
     && unzip /tmp/chromedriver.zip -d /usr/local/bin/ \
     && rm /tmp/chromedriver.zip
+
+# Switch back to non-root user
+USER $APP_UID
 
 # Build stage for building the application
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
