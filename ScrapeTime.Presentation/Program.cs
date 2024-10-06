@@ -46,11 +46,10 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection(); // Optional if you're using HTTPS
+app.UseHttpsRedirection(); 
 
 app.UseRouting();
 
-// Ensure CORS is used before Authorization
 app.UseCors("AllowAll");
 
 app.UseAuthorization();

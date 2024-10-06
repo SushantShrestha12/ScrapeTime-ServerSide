@@ -4,7 +4,7 @@ WORKDIR /app
 EXPOSE 8080
 EXPOSE 8081
 
-# Install Chrome dependencies
+# Install Chrome dependencies and clean up APT cache after installation
 RUN apt-get update && apt-get install -y \
     wget \
     unzip \
@@ -28,9 +28,10 @@ RUN apt-get update && apt-get install -y \
     libgbm1 \
     libvulkan1 \
     --no-install-recommends && \
+    apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
-# Install Chrome
+# Install Chrome and clean up after installation
 RUN wget -q -O /tmp/chromedriver.zip http://chromedriver.storage.googleapis.com/114.0.5735.90/chromedriver_linux64.zip && \
     unzip /tmp/chromedriver.zip -d /usr/local/bin/ && \
     rm /tmp/chromedriver.zip && \
@@ -38,7 +39,7 @@ RUN wget -q -O /tmp/chromedriver.zip http://chromedriver.storage.googleapis.com/
     dpkg -i /tmp/chrome.deb || apt-get -f install -y && \
     rm /tmp/chrome.deb
 
-# Verify installation
+# Verify installation of Chrome and ChromeDriver
 RUN which google-chrome
 RUN which chromedriver
 
@@ -66,4 +67,8 @@ COPY --from=publish /app/publish .
 ENV CHROME_BIN=/usr/bin/google-chrome \
     CHROME_DRIVER=/usr/local/bin/chromedriver
 
+# Explicitly set timezone to avoid locale issues in certain scraping scenarios
+RUN ln -sf /usr/share/zoneinfo/Etc/UTC /etc/localtime
+
+# Set the entry point for the application
 ENTRYPOINT ["dotnet", "ScrapeTime.Presentation.dll"]

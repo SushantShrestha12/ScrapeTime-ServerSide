@@ -27,7 +27,7 @@ namespace ScrapeTime.Presentation.Services
             
             options.Proxy = proxy;
             
-            // options.AddArgument("headless"); 
+            options.AddArgument("headless"); 
             options.AddArgument("--disable-gpu");
             options.AddArgument("--no-sandbox");
             options.AddArgument("--disable-dev-shm-usage");

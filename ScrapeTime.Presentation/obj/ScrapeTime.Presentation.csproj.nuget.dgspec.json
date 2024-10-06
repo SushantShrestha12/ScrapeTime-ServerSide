@@ -63,6 +63,10 @@
               "target": "Package",
               "version": "[13.0.3, )"
             },
+            "PuppeteerSharp": {
+              "target": "Package",
+              "version": "[20.0.2, )"
+            },
             "RestSharp": {
               "target": "Package",
               "version": "[111.2.0, )"
